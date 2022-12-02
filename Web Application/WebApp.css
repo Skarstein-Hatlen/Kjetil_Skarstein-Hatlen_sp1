@@ -1,3 +1,13 @@
+td {
+    border: 1px #DDD solid; 
+    padding: 5px; 
+    cursor: pointer;
+}
+
+.highlight {
+    background-color:  #e1df83a4;
+}    
+
 th {
     border: thin solid #212529;
     font-family: consolas; 
@@ -7,6 +17,13 @@ th {
 
 tr {
     border: thin solid #212529
+}
+
+#tdata {
+    border: thin solid #212529;
+    font-family: calibri; 
+    color:  #212529; 
+    background-color: #83D1E1;
 }
 
 #positiveButton {

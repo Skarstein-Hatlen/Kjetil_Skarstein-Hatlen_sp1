@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="WebApp.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-        <script src="WebApp.js"></script>
+        <script src="wdt_app.js"></script>
     </head>
     <body>
             <div class="row">
@@ -35,8 +35,8 @@
 
                     </tbody>
                 </table>
-                <button id="negativeButton">Out</button>
-                <button id="positiveButton" type="button">In</button>
+                <button class="btn" id="negativeButton">Out</button>
+                <button class="btn" id="positiveButton" type="button">In</button>
             </div>
 
             <div class="pt-5">
@@ -51,7 +51,7 @@
                         <th class="align-top">Return time:</th>
                     </tr>
                 </table>
-                <button id="positiveButton">Add</button>
+                <button class="btn" id="positiveButton">Add</button>
             </div>
 
             <div class="pt-5">
@@ -67,9 +67,11 @@
                     </tr>
                     <tr></tr>
                 </table>
-                <button id="negativeButton">Clear</button>
+                <button class="btn" id="negativeButton">Clear</button>
             </div>
         </div>
-            
+        <br><br>
+        <div id="dateTime">
+        </div>
     </body>
 </html>
