@@ -4,10 +4,72 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="WebApp.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-        <img src="C:\Users\Kjeti\OneDrive\Documents\Kjetil_Skarstein-Hatlen_sp1\Web Application\Company logo.png" alt="WDT Logo">
+        <script src="WebApp.js"></script>
     </head>
     <body>
-        <h1>Reception Management Dashboard</h1>
+            <div class="row">
+                <div class="col-md-12">
+                    <img src="Company logo.png" alt="WDT Logo" class="float-lef w-25">
+                    <h2 id="text"></h2>
+                </div>
+            </div>
+        <div class="container">
+            <div>
+                <h2 id="text" class="text-center">Staff</h2>
+                <table id="staffTable" class="table w-75 mx-auto" style="border: thin solid #212529;">
+                    <thead>
+                        <tr>
+                            <th class="align-top">Picture</th>
+                            <th class="align-top">Name</th>
+                            <th class="align-top">Surname</th>
+                            <th class="align-top">Email address</th>
+                            <th class="align-top">Status</th>
+                            <th class="align-top">Out Time</th>
+                            <th class="align-top">Duration</th>
+                            <th class="align-top">Expected Return Time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tdata">
+
+                    </tbody>
+                </table>
+                <button id="negativeButton">Out</button>
+                <button id="positiveButton" type="button">In</button>
+            </div>
+
+            <div class="pt-5">
+                <h2 id="text" class="text-center">Schedule Delivery</h2>
+                <table id="scheduleTable" class="table w-75 mx-auto" style="border: thin solid #212529;">
+                    <tr>
+                        <th class="align-top">Vehicle:</th>
+                        <th class="align-top">Name:</th>
+                        <th class="align-top">Surname:</th>
+                        <th class="align-top">Telephone:</th>
+                        <th class="align-top">Adress:</th>
+                        <th class="align-top">Return time:</th>
+                    </tr>
+                </table>
+                <button id="positiveButton">Add</button>
+            </div>
+
+            <div class="pt-5">
+                <h2 id="text" class="text-center">Delivery Board</h2>
+                <table id="deliveryBoard" class="table w-75 mx-auto" style="border: thin solid #212529;">
+                    <tr>
+                        <th class="align-top">Vehicle</th>
+                        <th class="align-top">Name</th>
+                        <th class="align-top">Surname</th>
+                        <th class="align-top">Telephone</th>
+                        <th class="align-top">Adress</th>
+                        <th class="align-top">Return time</th>
+                    </tr>
+                    <tr></tr>
+                </table>
+                <button id="negativeButton">Clear</button>
+            </div>
+        </div>
+            
     </body>
 </html>

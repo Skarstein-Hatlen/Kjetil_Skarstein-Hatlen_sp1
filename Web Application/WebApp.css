@@ -1,0 +1,27 @@
+th {
+    border: thin solid #212529;
+    font-family: consolas; 
+    color: #fff; 
+    background-color: #0E8EA8;
+}
+
+tr {
+    border: thin solid #212529
+}
+
+#positiveButton {
+    font-family: consolas;
+    background-color: #198754;
+    color: #fff;
+}
+
+#negativeButton {
+    font-family: consolas;
+    background-color: #dc3545;
+    color: #fff;
+}
+
+#text {
+    font-family: calibri;
+    color: #212529;
+}
