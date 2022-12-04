@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>WDT App</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -9,10 +10,10 @@
         <script src="wdt_app.js"></script>
     </head>
     <body>
-            <div class="row">
+            <div id="logoText">
                 <div class="col-md-12">
-                    <img src="Company logo.png" alt="WDT Logo" class="float-lef w-25">
-                    <h2 id="text"></h2>
+                    <img src="Company logo.png" id="wdtLogo" alt="WDT Logo">
+                    <h2 id="headText" class="text-center">Reception Management Dashboard</h2>
                 </div>
             </div>
         <div class="container">
@@ -21,18 +22,67 @@
                 <table id="staffTable" class="table w-75 mx-auto" style="border: thin solid #212529;">
                     <thead>
                         <tr>
-                            <th class="align-top">Picture</th>
-                            <th class="align-top">Name</th>
-                            <th class="align-top">Surname</th>
-                            <th class="align-top">Email address</th>
-                            <th class="align-top">Status</th>
-                            <th class="align-top">Out Time</th>
-                            <th class="align-top">Duration</th>
-                            <th class="align-top">Expected Return Time</th>
+                            <th class="align-middle">Picture</th>
+                            <th class="align-middle">Name</th>
+                            <th class="align-middle">Surname</th>
+                            <th class="align-middle">Email address</th>
+                            <th class="align-middle">Status</th>
+                            <th class="align-middle">Out Time</th>
+                            <th class="align-middle">Duration</th>
+                            <th class="align-middle">Expected Return Time</th>
                         </tr>
                     </thead>
-                    <tbody id="tdata">
-
+                    <tbody id="tData">
+                        <tr id="user1">
+                            <td class="align-middle"></td>
+                            <td class="align-middle"></td>
+                            <td class="align-middle"></td>
+                            <td class="align-middle"></td>
+                            <td class="align-middle"></td>
+                            <td class="align-middle"></td>
+                            <td class="align-middle"></td>
+                            <td class="align-middle"></td>
+                        </tr>
+                        <tr id="user2">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr id="user3">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr id="user4">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr id="user5">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
                     </tbody>
                 </table>
                 <button class="btn" id="negativeButton">Out</button>
@@ -58,12 +108,12 @@
                 <h2 id="text" class="text-center">Delivery Board</h2>
                 <table id="deliveryBoard" class="table w-75 mx-auto" style="border: thin solid #212529;">
                     <tr>
-                        <th class="align-top">Vehicle</th>
-                        <th class="align-top">Name</th>
-                        <th class="align-top">Surname</th>
-                        <th class="align-top">Telephone</th>
-                        <th class="align-top">Adress</th>
-                        <th class="align-top">Return time</th>
+                        <th>Vehicle</th>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Telephone</th>
+                        <th>Adress</th>
+                        <th>Return time</th>
                     </tr>
                     <tr></tr>
                 </table>
@@ -71,7 +121,7 @@
             </div>
         </div>
         <br><br>
-        <div id="dateTime">
+        <div class="text-right font-weight-bold mb-5 mr-5" id="dateTime">
         </div>
     </body>
 </html>

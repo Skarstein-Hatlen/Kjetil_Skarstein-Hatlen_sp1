@@ -6,7 +6,7 @@ $(document).ready(function() {
             success: function(data) {
                 console.log(data)
                 var userData = data.results
-                    $("#tdata").append("<tr>"+
+                    $("#user1").html(
                     "<td>"+"<img src='"+userData[0].picture.thumbnail+"'>"+"</img>"+"</td>"+
                     "<td>"+userData[0].name.first+"</td>"+
                     "<td>"+userData[0].name.last+"</td>"+
@@ -14,10 +14,9 @@ $(document).ready(function() {
                     "<td>"+"IN"+"</td>"+
                     "<td>"+""+"</td>"+
                     "<td>"+""+"</td>"+
-                    "<td>"+""+"</td>"+
-                    "</tr>"
+                    "<td>"+""+"</td>"
                     )
-                    $("#tdata").append("<tr>"+
+                    $("#user2").html(
                     "<td>"+"<img src='"+userData[1].picture.thumbnail+"'>"+"</img>"+"</td>"+
                     "<td>"+userData[1].name.first+"</td>"+
                     "<td>"+userData[1].name.last+"</td>"+
@@ -25,10 +24,9 @@ $(document).ready(function() {
                     "<td>"+"IN"+"</td>"+
                     "<td>"+""+"</td>"+
                     "<td>"+""+"</td>"+
-                    "<td>"+""+"</td>"+
-                    "</tr>"
+                    "<td>"+""+"</td>"
                     )
-                    $("#tdata").append("<tr>"+
+                    $("#user3").html(
                     "<td>"+"<img src='"+userData[2].picture.thumbnail+"'>"+"</img>"+"</td>"+
                     "<td>"+userData[2].name.first+"</td>"+
                     "<td>"+userData[2].name.last+"</td>"+
@@ -36,10 +34,9 @@ $(document).ready(function() {
                     "<td>"+"IN"+"</td>"+
                     "<td>"+""+"</td>"+
                     "<td>"+""+"</td>"+
-                    "<td>"+""+"</td>"+
-                    "</tr>"
+                    "<td>"+""+"</td>"
                     )
-                    $("#tdata").append("<tr>"+
+                    $("#user4").html(
                     "<td>"+"<img src='"+userData[3].picture.thumbnail+"'>"+"</img>"+"</td>"+
                     "<td>"+userData[3].name.first+"</td>"+
                     "<td>"+userData[3].name.last+"</td>"+
@@ -47,10 +44,9 @@ $(document).ready(function() {
                     "<td>"+"IN"+"</td>"+
                     "<td>"+""+"</td>"+
                     "<td>"+""+"</td>"+
-                    "<td>"+""+"</td>"+
-                    "</tr>"
+                    "<td>"+""+"</td>"
                     )
-                    $("#tdata").append("<tr>"+
+                    $("#user5").html(
                     "<td>"+"<img src='"+userData[4].picture.thumbnail+"'>"+"</img>"+"</td>"+
                     "<td>"+userData[4].name.first+"</td>"+
                     "<td>"+userData[4].name.last+"</td>"+
@@ -58,8 +54,7 @@ $(document).ready(function() {
                     "<td>"+"IN"+"</td>"+
                     "<td>"+""+"</td>"+
                     "<td>"+""+"</td>"+
-                    "<td>"+""+"</td>"+
-                    "</tr>"
+                    "<td>"+""+"</td>"
                     )
                 
             }
@@ -67,38 +62,128 @@ $(document).ready(function() {
 
 })
 
+
+//Staff 
+$(document).ready(function() {
+
+
+    //Table selected
+    $('#staffTable tbody').on('click', 'tr', function () {
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        } else {
+            $("tr.selected").removeClass('selected');
+            $(this).addClass('selected');
+        } 
+
+    //Staff Out
+    $("#negativeButton").on("click", function staffOut(){
+        
+        //functions
+        var userAnswer = parseFloat(prompt("Please provide the absence of the staff member in minutes:"))
+
+        
+        //Status Out
+        $("tr.selected:contains('IN')").find("td").eq(4).html("OUT");
+
+        
+        //Out Time
+        $("tr.selected").find("td").eq(5).html(function currentTime(){
+            const d = new Date();
+            var hour = d.getHours();
+            var minutes = d.getMinutes();
+            hour = checkTime(hour)
+            minutes = checkTime(minutes)
+            var currentTime = hour + ":" + minutes
+            function checkTime(i){
+                if(i < 10){i = "0" + i}
+                return i; 
+            }
+            return currentTime
+        });
+
+        
+        //Duration
+        $("tr.selected").find("td").eq(6).html(function duration(){
+            function timeConvert(num){ 
+                var hours = Math.floor(num / 60); 
+                var minutes = num % 60;
+                if(userAnswer < 60){
+                    return minutes + "min"
+                } else{
+                    return hours + "hr" + " " + minutes + "min";
+                }
+            }
+            while(true){
+                if(!isNaN(userAnswer)){
+                    return timeConvert(userAnswer)
+                } else{
+                    userAnswer = parseFloat(prompt("please provide the minutes in numbers"))
+                }   
+            }
+        })
+
+        //Expected return Time
+        $("tr.selected").find("td").eq(7).html(function expectedReturn(){
+            function timeConvert(num){
+                const d = new Date();
+                var hour = d.getHours();
+                var minutes = d.getMinutes();
+                var cHours = hour + Math.floor(num / 60);
+                var cMinutes = (minutes + num) % 60;
+                console.log (minutes + num)
+                if((minutes + num) > 60 && hour == cHours){
+                    cHours = cHours + Math.floor((minutes + num) / 60)
+                }
+                var expReturn = checkTime(cHours) + ":" + checkTime(cMinutes)
+                return expReturn
+            };   
+            function checkTime(i){
+                if(i < 10){i = "0" + i}
+                return i; 
+            }
+            return timeConvert(userAnswer)
+        })
+    })
+
+
+
+
+
+        //Staff In
+        $("#positiveButton").on("click", function staffIn(){
+            $("tr.selected:contains('OUT')").find("td").eq(4).html("IN")
+            $("tr.selected").find("td").eq(5).html("")
+            $("tr.selected").find("td").eq(6).html("")
+            $("tr.selected").find("td").eq(7).html("")
+        })
+    });
+})
+
 //Button in function
 
-//Button out function
-$(document).ready(function() {
-    $("#staffTable tbody tr").click(function(){
-        $(this).addClass("selected").siblings().removeClass("selected"); 
-        var value = $(this).find('td:first').html()
-        console.log(value)
-        });
-    
-    $("#negativeButton").on("click", function(e){
-            $("input[name*='IN']").val("OUT");
-    });
-});
 
-// Current date and time
+//Digital Clock Function
 $(document).ready(function() {
-    setInterval(function() {
+    setInterval(function digitalClock() {
         const d = new Date();
         var day = d.getDate();
-        day = day.toString().padStart(2, '0');
         var month = d.getMonth()+1;
-        month = month.toString().padStart(2, '0');
         var year = d.getFullYear();
         var hour = d.getHours();
-        hour = hour.toString().padStart(2, '0');
         var minutes = d.getMinutes();
-        minutes = minutes.toString().padStart(2, '0');
         var seconds = d.getSeconds();
-        seconds = seconds.toString().padStart(2, '0');
+        day = checkTime(day)
+        month = checkTime(month)
+        hour = checkTime(hour)
+        minutes = checkTime(minutes)
+        seconds = checkTime(seconds)
         var currentTime = day + "-" + month + "-" + year + " " + hour + ":" + minutes + ":" + seconds;
         $("#dateTime").html(currentTime);
         
     }, 1000);
+    function checkTime(i){
+        if(i < 10){i = "0" + i}
+        return i; 
+    }
 })
