@@ -15,51 +15,57 @@
 }
 
 
-/* Tables */
-td {
-    border: thin solid #212529; 
-    padding: 5px; 
-    cursor: pointer;
-}   
+/* Tables */  
 
-th {
+thead, th {
     border: thin solid #212529;
     font-family: consolas; 
     color: #fff; 
     background-color: #0E8EA8;
+    text-align: center;
 }
 
 tr {
-    border: thin solid #212529
+    border: thin solid #212529;
+    
 }
 
-tr:hover {
-    background-color: #0E8EA8;
-    color: #fff;
-}
-
-#tData {
+#tBodyStaff {
     border: thin solid #212529;
     font-family: calibri; 
     color:  #212529; 
     background-color: #83D1E1;
     text-align: center;
+    cursor: pointer;
 }
 
-thead {
+#tBodySchedule, #tBodyBoard, td {
+    border: thin solid #212529; 
+    font-family: calibri;
+    background-color: #83D1E1;
+    color: #212529; 
     text-align: center;
-    border: thin solid #212529;
 }
 
+#tBodyStaff tr:hover {
+    background-color: #0E8EA8;
+    color: #fff;
+}
+
+#tBodyBoard:hover, .selected {
+    background-color: #0E8EA8;
+    color: #fff;
+    cursor: pointer;
+}
 
 /* Buttons */
-#positiveButton {
+#inBtn, #addBtn {
     font-family: consolas;
     background-color: #198754;
     color: #fff;
 }
 
-#negativeButton {
+#outBtn, #clearBtn {
     font-family: consolas;
     background-color: #dc3545;
     color: #fff;
@@ -70,7 +76,3 @@ thead {
     color: #212529;
 }
 
-.selected {
-    background-color: #0E8EA8;
-    color: #fff;
-}

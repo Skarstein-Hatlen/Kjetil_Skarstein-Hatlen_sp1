@@ -4,8 +4,8 @@
         <title>WDT App</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" href="WebApp.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">        <link rel="stylesheet" href="WebApp.css">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
         <script src="wdt_app.js"></script>
     </head>
@@ -19,29 +19,29 @@
         <div class="container">
             <div>
                 <h2 id="text" class="text-center">Staff</h2>
-                <table id="staffTable" class="table w-75 mx-auto" style="border: thin solid #212529;">
+                <table id="staffTable" class="table w-75 mx-auto">
                     <thead>
                         <tr>
-                            <th class="align-middle">Picture</th>
-                            <th class="align-middle">Name</th>
-                            <th class="align-middle">Surname</th>
-                            <th class="align-middle">Email address</th>
-                            <th class="align-middle">Status</th>
-                            <th class="align-middle">Out Time</th>
-                            <th class="align-middle">Duration</th>
-                            <th class="align-middle">Expected Return Time</th>
+                            <th>Picture</th>
+                            <th>Name</th>
+                            <th>Surname</th>
+                            <th>Email address</th>
+                            <th>Status</th>
+                            <th>Out Time</th>
+                            <th>Duration</th>
+                            <th>Expected Return Time</th>
                         </tr>
                     </thead>
-                    <tbody id="tData">
+                    <tbody id="tBodyStaff">
                         <tr id="user1">
-                            <td class="align-middle"></td>
-                            <td class="align-middle"></td>
-                            <td class="align-middle"></td>
-                            <td class="align-middle"></td>
-                            <td class="align-middle"></td>
-                            <td class="align-middle"></td>
-                            <td class="align-middle"></td>
-                            <td class="align-middle"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                         <tr id="user2">
                             <td></td>
@@ -85,43 +85,75 @@
                         </tr>
                     </tbody>
                 </table>
-                <button class="btn" id="negativeButton">Out</button>
-                <button class="btn" id="positiveButton" type="button">In</button>
+                <button class="btn" id="outBtn">Out</button>
+                <button class="btn" id="inBtn" type="button">In</button>
             </div>
+
 
             <div class="pt-5">
                 <h2 id="text" class="text-center">Schedule Delivery</h2>
-                <table id="scheduleTable" class="table w-75 mx-auto" style="border: thin solid #212529;">
-                    <tr>
-                        <th class="align-top">Vehicle:</th>
-                        <th class="align-top">Name:</th>
-                        <th class="align-top">Surname:</th>
-                        <th class="align-top">Telephone:</th>
-                        <th class="align-top">Adress:</th>
-                        <th class="align-top">Return time:</th>
-                    </tr>
+                <table id="scheduleTable" class="table w-75 mx-auto">
+                    <thead>
+                        <tr>
+                            <th>Vehicle:</th>
+                            <th>Name:</th>
+                            <th>Surname:</th>
+                            <th>Telephone:</th>
+                            <th>Adress:</th>
+                            <th>Return time:</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tBodySchedule">
+                        <tr style="text-align: center;">
+                            <td><input id="vehicle" style="text-align: center;" type="text" placeholder="Motorcycle/Car"></td>
+                            <td><input id="inputFName" style="text-align: center;" type="text" placeholder="John"></td>
+                            <td><input id="inputLName" style="text-align: center;" type="text" placeholder="Doe"></td>
+                            <td><input id="phone" style="text-align: center;" type="text" placeholder="123-45-678"></td>
+                            <td><input id="inputAdress" style="text-align: center;" type="text" placeholder="1 Somewhere Street"></td>
+                            <td><input id="returnTime" style="text-align: center;" type="number" placeholder="12:34"></td>
+                        </tr>
+                    </tbody>
                 </table>
-                <button class="btn" id="positiveButton">Add</button>
+                <button id="addBtn" class="btn">Add</button>
             </div>
+
 
             <div class="pt-5">
                 <h2 id="text" class="text-center">Delivery Board</h2>
-                <table id="deliveryBoard" class="table w-75 mx-auto" style="border: thin solid #212529;">
-                    <tr>
-                        <th>Vehicle</th>
-                        <th>Name</th>
-                        <th>Surname</th>
-                        <th>Telephone</th>
-                        <th>Adress</th>
-                        <th>Return time</th>
-                    </tr>
-                    <tr></tr>
+                <table id="deliveryBoard" class="table w-75 mx-auto">
+                    <thead>
+                        <tr>
+                            <th>Vehicle</th>
+                            <th>Name</th>
+                            <th>Surname</th>
+                            <th>Telephone</th>
+                            <th>Adress</th>
+                            <th>Return time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tBodyBoard">
+                    </tbody>
                 </table>
-                <button class="btn" id="negativeButton">Clear</button>
+                <button id="clearBtn" class="btn">Clear</button>
+            </div>
+            <br><br>
+            <div class="text-end font-weight-bold mb-5" id="dateTime">
             </div>
         </div>
-        <br><br>
-        <div class="text-right font-weight-bold mb-5 mr-5" id="dateTime">
+
+
+        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+            <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <img src="..." class="rounded me-2" alt="...">
+                    <strong class="me-auto">Bootstrap</strong>
+                    <small>11 mins ago</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    Hello, world! This is a toast message.
+                </div>
+            </div>
         </div>
     </body>
 </html>
