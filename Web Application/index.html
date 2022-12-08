@@ -7,19 +7,44 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">        <link rel="stylesheet" href="WebApp.css">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script src="https://kit.fontawesome.com/9534e14c87.js" crossorigin="anonymous"></script>
         <script src="wdt_app.js"></script>
     </head>
     <body>
-            <div id="logoText">
-                <div class="col-md-12">
-                    <img src="Company logo.png" id="wdtLogo" alt="WDT Logo">
-                    <h2 id="headText" class="text-center">Reception Management Dashboard</h2>
+        <nav id="navBar" class="navbar navbar-expand-lg">
+            <div id="navBarMenu" class="container">
+                <a id="navBarMenu" class="navbar-brand" href="index.html">Dashboard</a>
+                <div class="dropdown">
+                    <button id="navBarMenu" class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Inventory
+                    </button>
+                    <ul id="navBarDropDown" class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="#">Search</a></li>
+                        <li><a class="dropdown-item" href="#">Add</a></li>
+                        <li><a class="dropdown-item" href="#">Remove</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown">
+                    <button id="navBarMenu" class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Orders
+                    </button>
+                    <ul id="navBarDropDown" class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="#">Search</a></li>
+                        <li><a class="dropdown-item" href="#">Add</a></li>
+                        <li><a class="dropdown-item" href="#">Remove</a></li>
+                    </ul>
                 </div>
             </div>
+        </nav>
+        <br>
+
+        <img src="Company logo.png" id="wdtLogo" alt="WDT Logo">
         <div class="container">
             <div>
+                <h1 id="headText" class="text-center">Reception Management Dashboard</h1>
+                <br>
                 <h2 id="text" class="text-center">Staff</h2>
-                <table id="staffTable" class="table w-75 mx-auto">
+                <table id="staffTable" class="table">
                     <thead>
                         <tr>
                             <th>Picture</th>
@@ -33,56 +58,11 @@
                         </tr>
                     </thead>
                     <tbody id="tBodyStaff">
-                        <tr id="user1">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr id="user2">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr id="user3">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr id="user4">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr id="user5">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                        <tr id="user1"></tr>
+                        <tr id="user2"></tr>
+                        <tr id="user3"></tr>
+                        <tr id="user4"></tr>
+                        <tr id="user5"></tr>
                     </tbody>
                 </table>
                 <button class="btn" id="outBtn">Out</button>
@@ -92,7 +72,7 @@
 
             <div class="pt-5">
                 <h2 id="text" class="text-center">Schedule Delivery</h2>
-                <table id="scheduleTable" class="table w-75 mx-auto">
+                <table id="scheduleTable" class="table">
                     <thead>
                         <tr>
                             <th>Vehicle:</th>
@@ -110,7 +90,7 @@
                             <td><input id="inputLName" style="text-align: center;" type="text" placeholder="Doe"></td>
                             <td><input id="phone" style="text-align: center;" type="text" placeholder="123-45-678"></td>
                             <td><input id="inputAdress" style="text-align: center;" type="text" placeholder="1 Somewhere Street"></td>
-                            <td><input id="returnTime" style="text-align: center;" type="number" placeholder="12:34"></td>
+                            <td><input id="returnTime" style="text-align: center;" type="text" placeholder="12:34"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -120,7 +100,7 @@
 
             <div class="pt-5">
                 <h2 id="text" class="text-center">Delivery Board</h2>
-                <table id="deliveryBoard" class="table w-75 mx-auto">
+                <table id="deliveryBoard" class="table">
                     <thead>
                         <tr>
                             <th>Vehicle</th>
@@ -145,13 +125,12 @@
         <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
             <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">
-                    <img src="..." class="rounded me-2" alt="...">
-                    <strong class="me-auto">Bootstrap</strong>
-                    <small>11 mins ago</small>
-                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    <img id="toastImg" src="..." class="rounded me-2" alt="...">
+                    <strong id="toastName" class="me-auto"></strong>
+                    <small id="toastSmall"></small>
+                    <button id="closeBtn" type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
-                <div class="toast-body">
-                    Hello, world! This is a toast message.
+                <div id="toastMessage" class="toast-body">
                 </div>
             </div>
         </div>

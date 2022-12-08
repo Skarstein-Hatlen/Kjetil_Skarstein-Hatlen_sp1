@@ -1,8 +1,5 @@
 
 /* Header */
-#logoText {
-    display: inline-block;
-}
 
 #headText {
     font-family: calibri;
@@ -14,8 +11,16 @@
     float: left;
 }
 
+#text {
+    font-family: calibri;
+    color: #212529;
+}
+
 
 /* Tables */  
+table{
+    border-radius: round;
+}
 
 thead, th {
     border: thin solid #212529;
@@ -52,7 +57,7 @@ tr {
     color: #fff;
 }
 
-#tBodyBoard:hover, .selected {
+#tBodyBoard tr:hover, .selected {
     background-color: #0E8EA8;
     color: #fff;
     cursor: pointer;
@@ -71,8 +76,35 @@ tr {
     color: #fff;
 }
 
-#text {
-    font-family: calibri;
-    color: #212529;
+#outBtn {
+    float: left;
 }
 
+#inBtn, #addBtn, #clearBtn {
+    float: right;
+}
+
+
+/* Input */
+input {
+    outline: 0;
+    border-width: 0 0 2px;
+    border-color: #212529;
+    background-color: #83D1E1;
+}
+
+/* Navbar */
+#navBar {
+    font-family: consolas;
+    background-color: #0E8EA8;
+}
+
+#navBarMenu {
+    background-color: #0E8EA8;
+    color: #fff
+}
+
+#navBarDropDown {
+    background-color: #83D1E1;
+    color: #212529;
+}
