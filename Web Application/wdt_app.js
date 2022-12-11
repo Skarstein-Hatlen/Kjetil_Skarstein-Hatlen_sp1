@@ -1,8 +1,13 @@
 let staffMembers = [];
+console.log(this, this.$)
 
+
+//Staff Table
 $(document).ready(function() {
-    // Get staff members
-    staffUserGet().then(staff => staffMembers = staff);
+    //Get staff members
+    staffUserGet().then(function(staff){
+        staffMembers = staff
+    });
 
     //Table selected
     $("#staffTable tbody").on("click", "tr", selectStaff);
@@ -26,9 +31,11 @@ function selectStaff() {
 function staffOut(){
     let selected = $("tr.selected");
     let userId = parseFloat(selected[0].id.substring(4));
-
-    //functions
     let userAnswer = parseFloat(prompt("Please provide the absence of the staff member in minutes:"));
+        if(userAnswer < 1 || userAnswer === ""){
+            alert("Minutes must be 1 or more")
+            return null;
+        };
     let staffMember = staffMembers.find(c => c.id === userId);
 
     //Expected return Time
@@ -67,7 +74,7 @@ function staffOut(){
 
         console.log(`Staff ${staff.id} has returned: ${!staff.isOut}`);
         if(staff.isOut) {
-            staffMemberIsLate(staff, userAnswer);
+            staff.staffMemberIsLate($);
         }
     }, userAnswer * 60 * 1000); // popup
 }
@@ -84,164 +91,58 @@ function staffIn(){
     selected.find("td").eq(7).html("")
 }
 
-//Toast if staff remeber is late
-function staffMemberIsLate(staffMember){
-    $("#toastImg").attr("src", staffMember.avatar);
-    $("#toastSmall").html(overdueMin + "min overdue");
-    $("#toastName").html(staffMember.name.first + " " +staffMember.name.last);
-    $("#toastMessage").html(`${staffMember.displayName} is late, we expected ${staffMember.name.last} back ${staffMember.expectedReturn}`);
-    $("#liveToast").removeClass("hide").addClass("show");
-    $("#closeBtn").on("click", function closeToast(){
-        $("#liveToast").removeClass("show").addClass("hide")
-    });
-};
 
-let overdueMin = 0;
-function overdue() {
-    if ($("#liveToast").hasClass("show")) {
-    overdueMin += 1;
-    }
-} 
-setInterval(overdue, 1000);
-console.log(overdueMin)
+//--------------------------------------------------------------------------//
+
 
 //Schedule delivery and add to delivery board
 $(document).ready(function(){
 
-    //Add button for adding delivery to board
-    $("#addBtn").on("click", function addDelivery(){
-        let deliveryInfo = "<tr>" +
-        "<td>" + $("#vehicle").val() + "</td>" +
-        "<td>" + $("#inputFName").val() + "</td>" +
-        "<td>" + $("#inputLName").val() + "</td>" +
-        "<td>" + $("#phone").val() + "</td>" +
-        "<td>" + $("#inputAdress").val() + "</td>" +
-        "<td>" + $("#returnTime").val() + "</td>" +
-        "</tr>";
-        $("#tBodyBoard").append(deliveryInfo);
-    });
-
-    //Remove selected delivery with clear Button
-    $("#tBodyBoard").on("click", "tr", function removeDelivery() {
-        if ($(this).hasClass("selected")) {
-            $(this).removeClass("selected");
-        } else {
-            $("tr.selected").removeClass("selected");
-            $(this).addClass("selected");
-        }
-        $("#clearBtn").on("click", function clearButton(){
-            $("tr.selected").html("")
-        })
-    })
-
-    //Validate Delivery function
-
-    //Vehicle
-    $("#vehicle").on("change", function(){
-        let value = $(this).eq(0).val().toLowerCase();
-        if(value !== "car") {
-            $(this).val("");
-            alert("Please try again and enter the either a car or a motorcycle");
-        } else {
-            return $(this).eq(0).val()
-        }        
-    })
-
-    //First name
-    $("#inputFName").on("change", function(){
-        let regexLetters = /^[a-zA-Z]+$/;
-        if(!regexLetters.test($(this).val())) {
-            $(this).val("");
-            alert("Please try again and enter a first name with letters only");
-        } else {
-            return $(this).eq(0).val()
-        }        
-    })
-
-    //Last Name
-    $("#inputLName").on("change", function(){
-        let regexLetters = /^[a-zA-Z]+$/;
-        if(!regexLetters.test($(this).val())) {
-            $(this).val("");
-            alert("Please try again and enter a last name with letters only");
-        } else {
-            return $(this).eq(0).val()
-        }        
-    })
-
-    //Phone number
-    $("#phone").on("change", function(){
-        let regexPhone = /^\+?[0-9]{7,}([0-9-]*[0-9])?$/;
-        if(!regexPhone.test($(this).val())) {
-            $(this).val("");
-            alert("Please provide a valid phone number of at least 7 numbers");
-        } else {
-            return $(this).eq(0).val()
-        }        
-    })
-
-    //Adress
-    $("#inputAdress").on("change", function(){
-        let regexAdress = /^(?=.*\d)(?=.*[a-zA-Z]).+$/;
-        if(!regexAdress.test($(this).val())) {
-            $(this).val("");
-            alert("Please enter a valid adress with both street and number");
-        } else {
-            return $(this).eq(0).val()
-        }        
-    })
-
-    //Return Time
-    $("#returnTime").on("change", function(){
-        const currentTime = new Date()
-        let enteredTime = new Date();
-        let regexReturn = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
-        enteredTime.setHours($(this).val().split(":")[0]);
-        enteredTime.setMinutes($(this).val().split(":")[1]);
-        if(!regexReturn.test($(this).val())) {
-            $(this).val("");
-            alert("Please enter a valid time format");
-        } else if(enteredTime > currentTime) {
-            $(this).val("");
-            alert("Please enter a valid time in format the present")
-        }
-        else {
-            return $(this).eq(0).val()
-        }        
-    })
-
-    //Delivery Driver is late function
+    //Clear Button
+    $("#tBodyBoard").on("click", "tr", selectDriver);
+    $("#clearBtn").on("click", removeDelivery)
 })
 
+function validateDelivery(form) {
+    if(form.checkValidity() !== true)
+        return null;
 
-//--------------------------------------------------------------------//
+    let driver = new DeliveryDriver({
+        vehicle: form.vehicle.value,
+        name: form.name.value,
+        surname: form.surname.value,
+        telephone: form.telephone.value,
+        deliveryAddress: form.deliveryAddress.value,
+        returnTime: form.returnTime.value
+    });
+    return driver;
+}
 
-/**
- * Staff section
- */
-class StaffMember {
-    constructor(user, id) {
-        this.id = id;
-        this.email = user.email;
-        this.name = {...user.name}
-        this.displayName = `${this.name.first} ${this.name.last}`
-        this.avatar = user.picture.thumbnail;
-        this.isOut = false;
-        this.outTime = '';
-        this.expectedReturn = '';
-    }
+function addDelivery(form) {
+    let driver = validateDelivery(form);
+    if(driver == null)
+        return;
 
-    out(expectedReturn){
-        this.isOut = true;
-        this.outTime = currentTime();
-        this.expectedReturn = expectedReturn;
-    }
+    driver.add($);
+}
 
-    in(){
-        this.isOut = false;
-        this.outTime = '';
+function selectDriver() {
+    if ($(this).hasClass("selected")) {
+        $(this).removeClass("selected");
+    } else {
+        $("tr.selected").removeClass("selected");
+        $(this).addClass("selected");
     }
 }
+
+function removeDelivery(){
+    let text = "Are you sure you wish to clear the selected delivery?";
+    if(confirm(text) == true) {
+        $("tr.selected").html("")
+    }
+};
+
+//--------------------------------------------------------------------//
 
 /**
  * retrieve users, map them to staff members and add them to the view.
@@ -257,8 +158,8 @@ async function staffUserGet(){
 
         $(targetEl).html(
             "<td>" + "<img alt='avatar' src='" + staffMember.avatar + "'/></td>" +
-            "<td>" + staffMember.name.first + "</td>" +
-            "<td>" + staffMember.name.last + "</td>" +
+            "<td>" + staffMember.name + "</td>" +
+            "<td>" + staffMember.surname + "</td>" +
             "<td>" + staffMember.email + "</td>" +
             "<td>" + "IN" + "</td>" +
             "<td>" + "" + "</td>" +
@@ -266,7 +167,6 @@ async function staffUserGet(){
             "<td>" + "" + "</td>"
         );
     }
-
     return staffMembers;
 }
 
@@ -313,6 +213,7 @@ function expectedReturn(userAnswer){
     return timeConvert(userAnswer)
 }
 
+
 //Digital Clock Function
 $(document).ready(function() {
     setInterval(function digitalClock() {
@@ -332,3 +233,96 @@ $(document).ready(function() {
         $("#dateTime").html(currentTime);
     }, 1000);
 })
+
+
+//Super
+class Employee {
+    constructor(name, surname) {
+        this.name = name;
+        this.surname = surname;
+    }
+}
+
+
+//Staff
+class StaffMember extends Employee {
+    constructor(user, id) {
+        super(user.name.first, user.name.last)
+        this.id = id;
+        this.email = user.email;
+
+        this.displayName = `${this.name} ${this.surname}`
+        this.avatar = user.picture.thumbnail;
+        this.isOut = false;
+        this.outTime = '';
+        this.expectedReturn = '';
+    }
+
+    out(expectedReturn){
+        this.isOut = true;
+        this.outTime = currentTime();
+        this.expectedReturn = expectedReturn;
+    }
+
+    in(){
+        this.isOut = false;
+        this.outTime = '';
+    }
+
+    staffMemberIsLate($){
+        let toast = $("#toastTemplate").clone();
+        let overdueCounter = 0;
+        function setOverdue() {
+            toast.find("#toastSmall").html(overdueCounter + "min overdue")
+            overdueCounter += 1;
+        }
+        setOverdue()
+        let cancel = setInterval(setOverdue, 60000);
+        
+        toast.find("#toastImg").attr("src", this.avatar);
+        toast.find("#toastName").html(this.displayName);
+        toast.find("#toastMessage").html(`${this.displayName} is late, we expected ${this.surname} back ${this.expectedReturn}`);
+        toast.find("#liveToast").removeClass("hide").addClass("show");
+        toast.find("#closeBtn").on("click", function() {
+            clearInterval(cancel);
+            $(toast).remove();
+        })
+
+        $("body").append(toast)
+    }
+}
+
+
+//Delivery
+class DeliveryDriver extends Employee {
+    constructor({name, surname, vehicle, telephone, deliveryAddress, returnTime}) {
+        super(name, surname);
+
+        this.vehicle = vehicle;
+        this.telephone = telephone;
+        this.deliveryAddress = deliveryAddress;
+        this.returnTime = returnTime;
+    }
+
+    deliveryDriverIsLate(){
+
+    }
+
+    add($){
+        if(this.vehicle.toLowerCase() == "car"){
+            this.vehicle = "<i class='bi bi-car-front-fill'></i>"
+        } else if(this.vehicle.toLowerCase() == "motorcycle"){
+            this.vehicle = "<i class='fa-solid fa-motorcycle'></i>"
+        }
+
+        let deliveryInfo = "<tr>" +
+            "<td>" + this.vehicle + "</td>" +
+            "<td>" + this.name + "</td>" +
+            "<td>" + this.surname + "</td>" +
+            "<td>" + this.telephone + "</td>" +
+            "<td>" + this.deliveryAddress + "</td>" +
+            "<td>" + this.returnTime + "</td>" +
+            "</tr>";
+        $("#tBodyBoard").append(deliveryInfo);
+    }
+}

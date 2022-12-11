@@ -5,6 +5,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">        <link rel="stylesheet" href="WebApp.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
         <script src="https://kit.fontawesome.com/9534e14c87.js" crossorigin="anonymous"></script>
@@ -44,7 +45,7 @@
                 <h1 id="headText" class="text-center">Reception Management Dashboard</h1>
                 <br>
                 <h2 id="text" class="text-center">Staff</h2>
-                <table id="staffTable" class="table">
+                <table id="staffTable" class="table bdr">
                     <thead>
                         <tr>
                             <th>Picture</th>
@@ -65,42 +66,57 @@
                         <tr id="user5"></tr>
                     </tbody>
                 </table>
-                <button class="btn" id="outBtn">Out</button>
-                <button class="btn" id="inBtn" type="button">In</button>
+                <button class="btn btn-warn" id="outBtn">Out</button>
+                <button class="btn btn-green" id="inBtn" type="button">In</button>
             </div>
 
 
             <div class="pt-5">
                 <h2 id="text" class="text-center">Schedule Delivery</h2>
-                <table id="scheduleTable" class="table">
-                    <thead>
-                        <tr>
-                            <th>Vehicle:</th>
-                            <th>Name:</th>
-                            <th>Surname:</th>
-                            <th>Telephone:</th>
-                            <th>Adress:</th>
-                            <th>Return time:</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tBodySchedule">
-                        <tr style="text-align: center;">
-                            <td><input id="vehicle" style="text-align: center;" type="text" placeholder="Motorcycle/Car"></td>
-                            <td><input id="inputFName" style="text-align: center;" type="text" placeholder="John"></td>
-                            <td><input id="inputLName" style="text-align: center;" type="text" placeholder="Doe"></td>
-                            <td><input id="phone" style="text-align: center;" type="text" placeholder="123-45-678"></td>
-                            <td><input id="inputAdress" style="text-align: center;" type="text" placeholder="1 Somewhere Street"></td>
-                            <td><input id="returnTime" style="text-align: center;" type="text" placeholder="12:34"></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <button id="addBtn" class="btn">Add</button>
+                <form onsubmit="addDelivery(this); return false">
+                    <table id="scheduleTable" class="table bdr">
+                        <thead>
+                            <tr>
+                                <th>Vehicle:</th>
+                                <th>Name:</th>
+                                <th>Surname:</th>
+                                <th>Telephone:</th>
+                                <th>Adress:</th>
+                                <th>Return time:</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tBodySchedule">
+                            <tr>
+                                <td>
+                                    <input name="vehicle" type="text" placeholder="Motorcycle/Car" pattern="^(car|Car|motorcycle|Motorcycle)$" required/>
+                                </td>
+                                <td>
+                                    <input name="name" type="text" placeholder="John" pattern="^[a-zA-Z]+$" required/>
+                                </td>
+                                <td>
+                                    <input name="surname" type="text" placeholder="Doe" pattern="^[a-zA-Z]+$" required/>
+                                </td>
+                                <td>
+                                    <input name="telephone" type="tel" placeholder="12345678" pattern="^\+?[0-9]{7,}([0-9-]*[0-9])?$" required/>
+                                </td>
+                                <td>
+                                    <input name="deliveryAddress" type="text" placeholder="1 Somewhere Street" pattern="^(?=.*\d)(?=.*[a-zA-Z]).+$" required/>
+                                </td>
+                                <td>
+                                    <input name="returnTime" type="time" placeholder="12:34" pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" required/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <button id="addBtn" type="submit" class="btn btn-green">Add</button>
+                </form>
             </div>
 
 
             <div class="pt-5">
                 <h2 id="text" class="text-center">Delivery Board</h2>
-                <table id="deliveryBoard" class="table">
+                <table id="deliveryBoard" class="table bdr">
                     <thead>
                         <tr>
                             <th>Vehicle</th>
@@ -114,15 +130,14 @@
                     <tbody id="tBodyBoard">
                     </tbody>
                 </table>
-                <button id="clearBtn" class="btn">Clear</button>
+                <button id="clearBtn" class="btn btn-warn">Clear</button>
             </div>
             <br><br>
             <div class="text-end font-weight-bold mb-5" id="dateTime">
             </div>
         </div>
 
-
-        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="toastTemplate" class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
             <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">
                     <img id="toastImg" src="..." class="rounded me-2" alt="...">
@@ -131,6 +146,18 @@
                     <button id="closeBtn" type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
                 <div id="toastMessage" class="toast-body">
+                </div>
+            </div>
+        </div>
+
+        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+            <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <strong id="toastNameDelivery" class="me-auto"></strong>
+                    <small id="eta"></small>
+                    <button id="closeBtn" type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div id="toastMessageDelivery" class="toast-body">
                 </div>
             </div>
         </div>
