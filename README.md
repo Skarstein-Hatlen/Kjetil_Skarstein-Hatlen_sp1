@@ -8,4 +8,4 @@ How to install:
 
 
 
-Need to use font-awesome for bicycle icon as bootstrap does not have a bicycle.
+Need to use font-awesome for motorcycle icon as bootstrap does not have a bicycle.

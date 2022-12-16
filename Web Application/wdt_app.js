@@ -1,5 +1,5 @@
 let staffMembers = [];
-console.log(this, this.$)
+let deliveryDrivers = [];
 
 
 //Staff Table
@@ -19,6 +19,7 @@ $(document).ready(function() {
     $("#inBtn").on("click", staffIn);
 });
 
+//Select from table
 function selectStaff() {
     if ($(this).hasClass("selected")) {
         $(this).removeClass("selected");
@@ -32,8 +33,9 @@ function staffOut(){
     let selected = $("tr.selected");
     let userId = parseFloat(selected[0].id.substring(4));
     let userAnswer = parseFloat(prompt("Please provide the absence of the staff member in minutes:"));
-        if(userAnswer < 1 || userAnswer === ""){
-            alert("Minutes must be 1 or more")
+    console.log(userAnswer)
+        if(userAnswer < 1 || userAnswer == "" || isNaN(userAnswer)){
+            alert("Please provide a valid number greater than 1 in order to leave the office")
             return null;
         };
     let staffMember = staffMembers.find(c => c.id === userId);
@@ -60,15 +62,10 @@ function staffOut(){
                 return hours + "hr" + " " + minutes + "min";
             }
         }
-        while(true){
-            if(!isNaN(userAnswer)){
-                return timeConvert(userAnswer)
-            } else{
-                userAnswer = prompt("Please provide the minutes in numbers");
-            }
-        }
+        return timeConvert(userAnswer)
     })
 
+    //Staff is Late
     setTimeout(() => {
         let staff = staffMembers.find(c => c.id === userId);
 
@@ -76,9 +73,10 @@ function staffOut(){
         if(staff.isOut) {
             staff.staffMemberIsLate($);
         }
-    }, userAnswer * 60 * 1000); // popup
+    }, userAnswer * 60 * 1000);
 }
 
+//Staff in, clear their Out Time, Duration, Expected Return and status
 function staffIn(){
     let selected = $("tr.selected");
     let userId = parseFloat(selected[0].id.substring(4));
@@ -92,16 +90,27 @@ function staffIn(){
 }
 
 
-//--------------------------------------------------------------------------//
+
+
 
 
 //Schedule delivery and add to delivery board
 $(document).ready(function(){
-
-    //Clear Button
     $("#tBodyBoard").on("click", "tr", selectDriver);
     $("#clearBtn").on("click", removeDelivery)
+    setInterval(deliveryDriverIsLate, 1000)
+    
 })
+
+//Add delivery validates format and add information
+function addDelivery(form) {
+    let driver = validateDelivery(form);
+    if(driver == null)
+        return;
+    deliveryDrivers.push(driver);
+    driver.add($);
+    console.log(deliveryDrivers)
+}
 
 function validateDelivery(form) {
     if(form.checkValidity() !== true)
@@ -118,14 +127,6 @@ function validateDelivery(form) {
     return driver;
 }
 
-function addDelivery(form) {
-    let driver = validateDelivery(form);
-    if(driver == null)
-        return;
-
-    driver.add($);
-}
-
 function selectDriver() {
     if ($(this).hasClass("selected")) {
         $(this).removeClass("selected");
@@ -135,19 +136,37 @@ function selectDriver() {
     }
 }
 
-function removeDelivery(){
+function removeDelivery() {
+    let selected = $("tr.selected");
+    let index = selected.index();
     let text = "Are you sure you wish to clear the selected delivery?";
-    if(confirm(text) == true) {
-        $("tr.selected").html("")
+    if (selected.length === 0) {
+    alert("No delivery was selected.");
+        return;
     }
-};
+    if (!confirm(text)) {
+        return;
+    }
+    deliveryDrivers.splice(index, 1);
+    selected.remove();
+    console.log(deliveryDrivers)
+}
+
+
+
+function deliveryDriverIsLate() {
+    const now = currentTime();
+    for (driver of deliveryDrivers.filter(driver => driver.returnTime == now)) {
+        driver.notifyIsLate();
+    }
+}
+
+
 
 //--------------------------------------------------------------------//
 
-/**
- * retrieve users, map them to staff members and add them to the view.
- * @returns {Promise<StaffMember[]>}
- */
+
+//retrieve users, map them to staff members and add them to the view.
 async function staffUserGet(){
     let staffMembers = await fetch('https://randomuser.me/api/?results=5&inc=picture,name,email')
         .then(result => result.json())
@@ -170,10 +189,8 @@ async function staffUserGet(){
     return staffMembers;
 }
 
-/**
- * returns the current time
- * @returns {string}
- */
+
+//returns the current time
 function currentTime(){
     const d = new Date();
     let hour = d.getHours();
@@ -183,34 +200,23 @@ function currentTime(){
     return hour + ":" + minutes;
 }
 
-/**
- * adds leading zeros to the 24hr clock
- * @returns {string}
- */
+
+//Adds leading zeros to the 24hr clock
 function checkTime(i){
     if(i < 10){i = "0" + i}
     return i;
 }
 
-/**
- * returns expected return time of staff members
- * @returns {string}
- */
+
+//Expected return time of staff members
 function expectedReturn(userAnswer){
-    function timeConvert(num){
-        const d = new Date();
-        var hour = d.getHours();
-        var minutes = d.getMinutes();
-        var cHours = hour + Math.floor(num / 60);
-        var cMinutes = (minutes + num) % 60;
-
-        if((minutes + num) > 60 && hour == cHours){
-            cHours = cHours + Math.floor((minutes + num) / 60)
-        }
-        return checkTime(cHours) + ":" + checkTime(cMinutes)
-    }
-
-    return timeConvert(userAnswer)
+        let d = new Date();
+        d.setMinutes(d.getMinutes() + userAnswer);
+        let hours = d.getHours();
+        let minutes = d.getMinutes();
+        if (hours < 10) hours = "0" + hours;
+        if (minutes < 10) minutes = "0" + minutes;
+        return hours + ":" + minutes;
 }
 
 
@@ -218,12 +224,12 @@ function expectedReturn(userAnswer){
 $(document).ready(function() {
     setInterval(function digitalClock() {
         const d = new Date();
-        var day = d.getDate();
-        var month = d.getMonth()+1;
-        var year = d.getFullYear();
-        var hour = d.getHours();
-        var minutes = d.getMinutes();
-        var seconds = d.getSeconds();
+        let day = d.getDate();
+        let month = d.getMonth()+1;
+        let year = d.getFullYear();
+        let hour = d.getHours();
+        let minutes = d.getMinutes();
+        let seconds = d.getSeconds();
         day = checkTime(day)
         month = checkTime(month)
         hour = checkTime(hour)
@@ -270,7 +276,7 @@ class StaffMember extends Employee {
     }
 
     staffMemberIsLate($){
-        let toast = $("#toastTemplate").clone();
+        let toast = $("#staffToast").clone();
         let overdueCounter = 0;
         function setOverdue() {
             toast.find("#toastSmall").html(overdueCounter + "min overdue")
@@ -281,7 +287,7 @@ class StaffMember extends Employee {
         
         toast.find("#toastImg").attr("src", this.avatar);
         toast.find("#toastName").html(this.displayName);
-        toast.find("#toastMessage").html(`${this.displayName} is late, we expected ${this.surname} back ${this.expectedReturn}`);
+        toast.find("#toastMessage").html(`${this.displayName} is late, we expected ${this.name} back ${this.expectedReturn}`);
         toast.find("#liveToast").removeClass("hide").addClass("show");
         toast.find("#closeBtn").on("click", function() {
             clearInterval(cancel);
@@ -297,18 +303,36 @@ class StaffMember extends Employee {
 class DeliveryDriver extends Employee {
     constructor({name, surname, vehicle, telephone, deliveryAddress, returnTime}) {
         super(name, surname);
-
         this.vehicle = vehicle;
         this.telephone = telephone;
         this.deliveryAddress = deliveryAddress;
         this.returnTime = returnTime;
+        this.notified = false;
     }
 
-    deliveryDriverIsLate(){
-
+    notifyIsLate(){
+        if(this.notified)
+            return
+            let toast = $("#deliveryToast").clone();
+            toast.find("#toastNameDelivery").html(this.name + " " + this.surname);
+            toast.find("#toastMessageDelivery").html(`Telephone: ${this.telephone}<br> Adress: ${this.deliveryAddress}`);
+            toast.find("#estimatedReturn").html("Expected return: " + this.returnTime)
+            toast.find("#liveToast").removeClass("hide").addClass("show");
+            toast.find("#closeBtn").on("click", function() {
+                $(toast).remove();
+            })
+        
+            $("body").append(toast)
+            this.notified = true;
     }
 
     add($){
+        if(this.returnTime > currentTime()){
+            this.returnTime = this.returnTime
+        } else {
+            alert("Please provide the Return Time in a present time format")
+            return;
+        }
         if(this.vehicle.toLowerCase() == "car"){
             this.vehicle = "<i class='bi bi-car-front-fill'></i>"
         } else if(this.vehicle.toLowerCase() == "motorcycle"){

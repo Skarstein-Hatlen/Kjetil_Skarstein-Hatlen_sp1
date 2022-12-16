@@ -1,8 +1,14 @@
 /* Header */
+.header {
+    display: inline-block;
+}
 
 #headText {
     font-family: calibri;
     color: #212529;
+    width: 100%;
+    position: absolute;
+    text-align: center;
 }
 
 #wdtLogo {
@@ -12,8 +18,11 @@
 }
 
 #text {
+    display: inline-block;
     font-family: calibri;
     color: #212529;
+    bottom: auto;
+    width: 100%;
 }
 
 
@@ -94,6 +103,7 @@ input {
     border-color: #212529;
     background-color: #83D1E1;
     text-align: center;
+    width: 100%;
 }
 
 /* Navbar */

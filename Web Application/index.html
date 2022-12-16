@@ -37,13 +37,18 @@
                 </div>
             </div>
         </nav>
-        <br>
 
-        <img src="Company logo.png" id="wdtLogo" alt="WDT Logo">
+        <div class="container header">
+            <img src="Company logo.png" id="wdtLogo" alt="WDT Logo">
+            <br>
+            <br>
+            <br>
+            <h1 id="headText" class="">Reception Management Dashboard</h1>
+        </div>
+
+        <br>
         <div class="container">
-            <div>
-                <h1 id="headText" class="text-center">Reception Management Dashboard</h1>
-                <br>
+            <div class="pt-3">
                 <h2 id="text" class="text-center">Staff</h2>
                 <table id="staffTable" class="table bdr">
                     <thead>
@@ -91,10 +96,10 @@
                                     <input name="vehicle" type="text" placeholder="Motorcycle/Car" pattern="^(car|Car|motorcycle|Motorcycle)$" required/>
                                 </td>
                                 <td>
-                                    <input name="name" type="text" placeholder="John" pattern="^[a-zA-Z]+$" required/>
+                                    <input name="name" type="text" placeholder="John" pattern="^[A-Z][a-zA-Z]*$" required/>
                                 </td>
                                 <td>
-                                    <input name="surname" type="text" placeholder="Doe" pattern="^[a-zA-Z]+$" required/>
+                                    <input name="surname" type="text" placeholder="Doe" pattern="^[A-Z][a-zA-Z]*$" required/>
                                 </td>
                                 <td>
                                     <input name="telephone" type="tel" placeholder="12345678" pattern="^\+?[0-9]{7,}([0-9-]*[0-9])?$" required/>
@@ -137,7 +142,8 @@
             </div>
         </div>
 
-        <div id="toastTemplate" class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+
+        <div id="staffToast" class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
             <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">
                     <img id="toastImg" src="..." class="rounded me-2" alt="...">
@@ -150,16 +156,17 @@
             </div>
         </div>
 
-        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="deliveryToast" class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
             <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">
                     <strong id="toastNameDelivery" class="me-auto"></strong>
-                    <small id="eta"></small>
+                    <small id="estimatedReturn"></small>
                     <button id="closeBtn" type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
                 <div id="toastMessageDelivery" class="toast-body">
                 </div>
             </div>
         </div>
+
     </body>
 </html>
