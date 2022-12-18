@@ -43,7 +43,7 @@ function staffOut(){
     //Expected return Time
     let expectedBack = expectedReturn(userAnswer);
     staffMember.out(expectedBack);
-    selected.find("td").eq(7).html(expectedBack)
+    selected.find("td").eq(7).html(expectedBack);
 
     //Status Out
     $("tr.selected:contains('IN')").find("td").eq(4).html("OUT");
@@ -92,7 +92,7 @@ function staffIn(){
 
 
 
-
+//----------------------------------------------------------------------------------//
 
 //Schedule delivery and add to delivery board
 $(document).ready(function(){
@@ -163,7 +163,7 @@ function deliveryDriverIsLate() {
 
 
 
-//--------------------------------------------------------------------//
+//--------------------------------------------------------------------------------------------//
 
 
 //retrieve users, map them to staff members and add them to the view.
